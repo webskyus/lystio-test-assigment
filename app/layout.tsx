@@ -4,12 +4,12 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 const allianceSemiBold = localFont({
-  src: "./fonts/allianceSemiBold.woff",
+  src: "./assets/fonts/allianceSemiBold.woff",
   variable: "--font-alliance-semibold",
   weight: "100 900",
 });
 const allianceMedium = localFont({
-  src: "./fonts/allianceMedium.woff",
+  src: "./assets/fonts/allianceMedium.woff",
   variable: "--font-alliance-medium",
   weight: "100 900",
 });
