@@ -23,7 +23,7 @@ const Header = () => {
                             <LanguageDropdown/>
                         </li>
 
-                        <li>
+                        <li className={'min-w-[55px]'}>
                             <ProfileHead/>
                         </li>
                     </ul>

@@ -5,6 +5,8 @@ interface Props {
 }
 
 const StatusLabel: FC<Props> = ({name}) => {
+    if (!name) return;
+
     return (
         <span className={'px-[9px] py-[4px] mr-[9px] text-[12px] bg-white rounded-full'}>
             {name}

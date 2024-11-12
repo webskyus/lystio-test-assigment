@@ -1,7 +1,6 @@
 'use client';
 
-import React, {FC, useEffect} from 'react';
-import Image from "next/image";
+import React, {FC} from 'react';
 import {StatusLabel} from "@/app/components/properties/ui/components/status-label";
 import {Icon} from "@iconify/react";
 import dayjs from "dayjs";
@@ -9,24 +8,11 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import VerifiedIcon from "@/app/components/icons/verified-icon";
 import FavoriteIcon from "@/app/components/icons/favorite-icon";
 import {CardSlider} from "@/app/components/properties/ui/components/card-slider";
+import {PropertyListType} from "@/app/components/properties/ui/components/properties-list/ui/properties-list";
 
 
 interface Props {
-    data: {
-        id: number,
-        images: string[],
-        title: string,
-        isNew: boolean,
-        is3dTour: boolean,
-        isVerified: boolean,
-        area: string,
-        address: string,
-        bedrooms: string,
-        bathrooms: string,
-        priceRange: string,
-        availableFrom: string,
-        date: number,
-    }
+    data: PropertyListType
 }
 
 dayjs.extend(relativeTime);
@@ -69,7 +55,7 @@ const PropertyCard: FC<Props> = ({data}) => {
                         </span>
                     )}
 
-                    <time dateTime={dayjs(data.date).format()}>
+                    <time dateTime={dayjs(data.date).format()} className={'ml-auto opacity-60'}>
                         {dayjs().to(data.date)}
                     </time>
                 </div>
@@ -84,20 +70,26 @@ const PropertyCard: FC<Props> = ({data}) => {
 
                 <div className={`
                     flex items-center justify-between 
-                    mb-[16px] 
+                    mb-[16px] min-h-[20px]
                     text-[12px] 
                     opacity-60
                 `}>
                     <span className={'flex items-center'}>
-                        <Icon icon="tabler:cube" width={18} height={18} className={'mr-[8px]'}/>
+                        <span className={'inline-block min-w-[18px] mr-[8px]'}>
+                             <Icon icon="tabler:cube" width={18} height={18}/>
+                        </span>
                         {data.area}
                     </span>
                     <span className={'flex items-center'}>
-                        <Icon icon="material-symbols:bed-outline" width={20} height={20} className={'mr-[8px]'}/>
+                         <span className={'inline-block min-w-[18px] mr-[8px]'}>
+                            <Icon icon="material-symbols:bed-outline" width={20} height={20}/>
+                         </span>
                         {data.bedrooms}
                     </span>
                     <span className={'flex items-center'}>
-                        <Icon icon="solar:bath-linear" width={18} height={18} className={'mr-[8px]'}/>
+                         <span className={'inline-block min-w-[18px] mr-[8px]'}>
+                            <Icon icon="solar:bath-linear" width={18} height={18}/>
+                         </span>
                         {data.bathrooms}
                     </span>
                 </div>

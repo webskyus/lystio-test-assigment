@@ -27,4 +27,12 @@ body {
   scrollbar-width: none;    /* Firefox */
 }
 
+.swiper-pagination-bullet {
+  background: var(--background)!important;
+  opacity: 1!important;
+  transition: all 0.25s;
+}
 
+.swiper-pagination-bullet-active {
+  transform: scale(1.5)!important;
+}
