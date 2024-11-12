@@ -17,9 +17,13 @@ export default {
       }
     },
     extend: {
+      fontFamily: {
+        allianceSemiBold:  ['allianceSemiBold']
+      },
       colors: {
         primary: "var(--primary)",
-        'dark-primary': 'var(--dark-primary)',
+        'primary-dark': 'var(--primary-dark)',
+        'primary-darken': 'var(--primary-darken)',
         background: "var(--background)",
         foreground: "var(--foreground)",
         'black-light': 'rgba(0, 0, 0, 0.1)',

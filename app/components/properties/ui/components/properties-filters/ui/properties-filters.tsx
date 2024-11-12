@@ -64,8 +64,16 @@ const PropertiesFilters = () => {
 
                                     {
                                         filter.name === 'All'
-                                            ? <Icon icon="lets-icons:filter-big" strokeWidth={1.5} color={'text-dark-primary'} width={22} height={22} className={'ml-[10px]'} />
-                                            : <Icon icon="iconoir:nav-arrow-down" width={18} height={18} className={'ml-[10px]'} />
+                                            ? <Icon icon="lets-icons:filter-big"
+                                                    strokeWidth={1.5}
+                                                    color={'text-dark-primary'}
+                                                    width={22} height={22}
+                                                    className={'ml-[10px]'}
+                                            />
+                                            : <Icon icon="iconoir:nav-arrow-down"
+                                                    width={18} height={18}
+                                                    className={'ml-[10px]'}
+                                            />
                                     }
                                 </button>
                             </li>

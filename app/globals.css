@@ -4,17 +4,11 @@
 
 :root {
   --primary: #A540F3;
+  --primary-dark: #2D264B;
+  --primary-darken: #5A0CFF;
   --background: #F6F7F9;
   --foreground: #171717;
-  --dark-primary: #2D264B;
 }
-
-/*@media (prefers-color-scheme: dark) {*/
-/*  :root {*/
-/*    --background: #0a0a0a;*/
-/*    --foreground: #ededed;*/
-/*  }*/
-/*}*/
 
 body {
   font-family: 'allianceMedium', Arial, Helvetica, sans-serif;
@@ -23,3 +17,14 @@ body {
   color: var(--foreground);
   background: var(--background);
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE и Edge */
+  scrollbar-width: none;    /* Firefox */
+}
+
+
