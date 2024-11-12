@@ -13,7 +13,7 @@ const Search = () => {
             <div className="flex items-center mx-2 text-black cursor-pointer">
                 <Icon icon="mingcute:ai-fill" />
                 <span className="mr-1 size">AI Search</span>
-                <Icon icon="iconoir:nav-arrow-down" />
+                <Icon icon="iconoir:nav-arrow-down" width={18} height={18}/>
             </div>
 
             <button type={"submit"} className="flex items-center justify-center w-[47px] h-[47px] bg-primary rounded-full text-white hover:bg-fuchsia-800 transition">

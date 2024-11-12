@@ -19,6 +19,7 @@ export default {
     extend: {
       colors: {
         primary: "var(--primary)",
+        'dark-primary': 'var(--dark-primary)',
         background: "var(--background)",
         foreground: "var(--foreground)",
         'black-light': 'rgba(0, 0, 0, 0.1)',
