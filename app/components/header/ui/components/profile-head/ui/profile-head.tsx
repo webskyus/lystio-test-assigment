@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from "next/image";
 import {Icon} from "@iconify/react";
-import Avatar from '@/app/assets/images/profile.jpg';
+import Avatar from '@/app/assets/img/profile.jpg';
 
 const ProfileHead = () => {
     return (
