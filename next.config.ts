@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
                 protocol: 'https',
                 hostname: 'cdn.lystio.co',
             },
+            {
+                protocol: 'https',
+                hostname: 'i.imgur.com',
+            },
         ],
     }
 };

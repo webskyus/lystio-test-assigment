@@ -2,7 +2,6 @@ import React, {FC} from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Image from "next/image";
 import {EffectCreative, Pagination} from "swiper/modules";
-import defaultSlideImage from '@/app/assets/img/1.webp';
 import {MediaModel} from "@/app/context";
 
 interface Props {
@@ -33,7 +32,7 @@ const CardSlider: FC<Props> = ({slides}) => {
                     !slides?.length && <SwiperSlide>
                         <div className={'min-h-[280px]'}>
                             <Image
-                                src={defaultSlideImage.src}
+                                src={'https://i.imgur.com/pAVrpPN.jpeg'}
                                 fill={true}
                                 objectFit={'cover'}
                                 alt={'Property photo, slide'}
