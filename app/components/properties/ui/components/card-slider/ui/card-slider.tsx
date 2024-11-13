@@ -49,6 +49,7 @@ const CardSlider: FC<Props> = ({slides}) => {
                                 <Image
                                     src={slide.cdnUrl}
                                     fill={true}
+                                    blurDataURL={slide.bluredDataURL}
                                     alt={'Property photo, slide'}
                                     className="w-full h-[280px]"
                                 />

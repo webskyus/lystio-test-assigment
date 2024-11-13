@@ -1,10 +1,11 @@
 import React from "react";
-import type { Metadata } from "next";
 import localFont from "next/font/local";
+import {SearchProvider} from "@/app/context";
+import type { Metadata } from "next";
 import 'swiper/css';
 import 'swiper/css/pagination';
 import "./globals.css";
-import {SearchProvider} from "@/app/context";
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const allianceSemiBold = localFont({
   src: "./assets/fonts/allianceSemiBold.woff",
