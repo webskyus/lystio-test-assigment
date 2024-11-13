@@ -109,7 +109,7 @@ const PropertyCard: FC<Props> = ({data}) => {
                 <p className={'mb-[18px] font-allianceSemiBold text-[18px]'}>
                     {
                         data.rentRange
-                            ? `${data.rentRange[0]} - ${data.rentRange[1]} €`
+                            ? `${data.rentRange[0]} € - ${data.rentRange[1]} €`
                             : `${data.rent} €`
                     }
                 </p>
