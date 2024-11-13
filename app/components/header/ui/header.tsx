@@ -11,7 +11,6 @@ const Header = () => {
             <div className={'container'}>
                 <nav className={'flex items-center justify-between'}>
                     <Logo/>
-
                     <Search/>
 
                     <ul className={'flex items-center'}>

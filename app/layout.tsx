@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import 'swiper/css';
 import 'swiper/css/pagination';
 import "./globals.css";
+import {SearchProvider} from "@/app/context";
 
 const allianceSemiBold = localFont({
   src: "./assets/fonts/allianceSemiBold.woff",
@@ -31,7 +32,9 @@ export default function RootLayout({
       <body
         className={`${allianceMedium.variable} ${allianceSemiBold.variable} antialiased`}
       >
-        {children}
+        <SearchProvider>
+          {children}
+        </SearchProvider>
       </body>
     </html>
   );

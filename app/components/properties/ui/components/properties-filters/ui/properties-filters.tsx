@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import {Icon} from "@iconify/react";
 import Slider from "rc-slider";
 import './slider.css';
+import {useSearch} from "@/app/context";
 
 
 enum FILTER_ID {
@@ -51,16 +52,26 @@ const filters = [
 ]
 
 const PropertiesFilters = () => {
-    const [defaultValue, setDefaultValue] = useState([300, 500]);
+    const [priceRange, setPriceRange] = useState<number[]>([300, 500]);
     const [showPriceRange, setShowPriceRange] = useState(false);
+    const {updateFilters} = useSearch();
 
     const handleShowPriceSlider = (id: number) => {
-        id === FILTER_ID.PRICE && setShowPriceRange(!showPriceRange)
+        return id === FILTER_ID.PRICE && setShowPriceRange(!showPriceRange)
     }
 
     const handleChange = (value: number[] | number) => {
-        Array.isArray(value) && setDefaultValue(value);
+        return Array.isArray(value) && setPriceRange(value);
     };
+
+    const handleFiltering = () => {
+        setShowPriceRange(false);
+        updateFilters({
+            filter: {
+                rent: priceRange
+            }
+        })
+    }
 
     return (
         <section className={'mb-[5px] px-[16px] py-[17.5px] bg-white'}>
@@ -81,7 +92,7 @@ const PropertiesFilters = () => {
                                     {
                                         filter.id === FILTER_ID.PRICE &&
                                         <span className={'text-black opacity-[0.6]'}>
-                                            : €{defaultValue[0]} - €{defaultValue[1]}
+                                            : €{priceRange[0]} - €{priceRange[1]}
                                         </span>
                                     }
 
@@ -109,14 +120,14 @@ const PropertiesFilters = () => {
                     <div className={`
                         absolute left-[-17.5px] top-[calc(100%+20px)] z-20 
                         flex items-center 
-                        w-[calc(100%+34.5px)] h-[50px] 
+                        w-[calc(50%+16px)] h-[50px] 
                         px-[16px] py-[17.5px]
                         bg-white
                     `}>
                         <Slider min={0}
                                 max={10000}
                                 range={{draggableTrack: true}}
-                                defaultValue={defaultValue}
+                                defaultValue={priceRange}
                                 onChange={handleChange}
                                 allowCross={false}
                                 styles={{
@@ -133,6 +144,8 @@ const PropertiesFilters = () => {
                                     },
                                 }}
                         />
+
+                        <button onClick={handleFiltering} className={'ml-[20px] px-[15px] py-[5px] bg-background'}>Search</button>
                     </div>
                 }
             </nav>

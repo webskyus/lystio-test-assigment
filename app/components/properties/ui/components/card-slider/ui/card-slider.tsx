@@ -2,9 +2,11 @@ import React, {FC} from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Image from "next/image";
 import {EffectCreative, Pagination} from "swiper/modules";
+import defaultSlideImage from '@/app/assets/images/s1.jpg';
+import {MediaModel} from "@/app/context";
 
 interface Props {
-    slides: string[]
+    slides: MediaModel[]
 }
 
 const CardSlider: FC<Props> = ({slides}) => {
@@ -26,16 +28,27 @@ const CardSlider: FC<Props> = ({slides}) => {
                         },
                     }}
                     modules={[Pagination, EffectCreative]}
-                    className={'mySwiper3 min-h-[280px]'}
-                    onSlideChange={() => console.log('slide change')}
-                    onSwiper={(swiper) => console.log(swiper)}>
+                    className={'mySwiper3 min-h-[280px]'}>
                 {
-                    slides.map((slide, i) => {
-                        console.log('slide', slide)
+                    !slides?.length && <SwiperSlide>
+                        <div className={'min-h-[280px]'}>
+                            <Image
+                                src={defaultSlideImage.src}
+                                fill={true}
+                                objectFit={'cover'}
+                                alt={'Property photo, slide'}
+                                className="w-full h-[280px]"
+                            />
+                        </div>
+                    </SwiperSlide>
+                }
+
+                {
+                    slides?.map((slide, i) => {
                         return <SwiperSlide key={i}>
                             <div className={'min-h-[280px]'}>
                                 <Image
-                                    src={slide}
+                                    src={slide.cdnUrl}
                                     fill={true}
                                     alt={'Property photo, slide'}
                                     className="w-full h-[280px]"

@@ -1,18 +1,17 @@
 'use client';
 
 import React, {FC} from 'react';
-import {StatusLabel} from "@/app/components/properties/ui/components/status-label";
 import {Icon} from "@iconify/react";
 import dayjs from "dayjs";
 import relativeTime from 'dayjs/plugin/relativeTime';
-import VerifiedIcon from "@/app/components/icons/verified-icon";
 import FavoriteIcon from "@/app/components/icons/favorite-icon";
 import {CardSlider} from "@/app/components/properties/ui/components/card-slider";
-import {PropertyListType} from "@/app/components/properties/ui/components/properties-list/ui/properties-list";
-
+import {IsVerifiedLabel} from "@/app/components/properties/ui/components/is-verified-label";
+import {StatusLabel} from "@/app/components/properties/ui/components/status-label";
+import {PropertyModel} from "@/app/context";
 
 interface Props {
-    data: PropertyListType
+    data: PropertyModel
 }
 
 dayjs.extend(relativeTime);
@@ -26,11 +25,12 @@ const PropertyCard: FC<Props> = ({data}) => {
             `}
         >
             <div className={'relative'}>
-                <CardSlider slides={data.images}/>
+                <CardSlider slides={data.media}/>
 
+                {/*I cannot find some info about 3D tour in JSON*/}
                 <div className={'absolute left-[10px] top-[10px] z-10'}>
-                    <StatusLabel name={data.isNew ? 'New' : ''}/>
-                    <StatusLabel name={data.is3dTour ? '3D Tour' : ''}/>
+                    <StatusLabel name={data.constructionYear ? 'New' : ''}/>
+                    {/*<StatusLabel name={data.is3dTour ? '3D Tour' : ''}/>*/}
                 </div>
 
                 <button className={`
@@ -48,16 +48,14 @@ const PropertyCard: FC<Props> = ({data}) => {
 
             <div className={'p-[8px] pt-[16px]'}>
                 <div className={'flex justify-between items-center mb-[16px]'}>
-                    {data.isVerified && (
-                        <span className={'flex items-center text-primary-darken'}>
-                            <VerifiedIcon/>
-                            <span className={'ml-[8px] opacity-60'}>Verified</span>
-                        </span>
-                    )}
+                    <IsVerifiedLabel isVerified={data.verified}/>
 
-                    <time dateTime={dayjs(data.date).format()} className={'ml-auto opacity-60'}>
-                        {dayjs().to(data.date)}
-                    </time>
+                    {
+                        data.verified &&
+                        <time dateTime={dayjs(data.lastRenewAt).format()} className={'ml-auto opacity-60'}>
+                            {dayjs().to(data.lastRenewAt)}
+                        </time>
+                    }
                 </div>
 
                 <h3 className={'mb-[16px] font-allianceSemiBold line-clamp-1'}>
@@ -78,35 +76,60 @@ const PropertyCard: FC<Props> = ({data}) => {
                         <span className={'inline-block min-w-[18px] mr-[8px]'}>
                              <Icon icon="tabler:cube" width={18} height={18}/>
                         </span>
-                        {data.area}
+                        {
+                            data.sizeRange
+                                ? `${data.sizeRange[0]} - ${data.sizeRange[1]} m²`
+                                : `${data.size} m²`
+                        }
                     </span>
+
                     <span className={'flex items-center'}>
                          <span className={'inline-block min-w-[18px] mr-[8px]'}>
                             <Icon icon="material-symbols:bed-outline" width={20} height={20}/>
                          </span>
-                        {data.bedrooms}
+                        {
+                            data.roomsBedRange
+                                ? `${data.roomsBedRange[0]} - ${data.roomsBedRange[1]} bed`
+                                : `${data.roomsBed} bed`
+                        }
                     </span>
+
                     <span className={'flex items-center'}>
                          <span className={'inline-block min-w-[18px] mr-[8px]'}>
                             <Icon icon="solar:bath-linear" width={18} height={18}/>
                          </span>
-                        {data.bathrooms}
+                        {
+                            data.roomsRange
+                                ? `${data.roomsRange[0]} - ${data.roomsRange[1]} bath`
+                                : `${data.roomsBath} bath`
+                        }
                     </span>
                 </div>
 
                 <p className={'mb-[18px] font-allianceSemiBold text-[18px]'}>
-                    {data.priceRange}
+                    {
+                        data.rentRange
+                            ? `${data.rentRange[0]} - ${data.rentRange[1]} €`
+                            : `${data.rent} €`
+                    }
                 </p>
 
-                <p className={'text-[12px]'}>
-                    <span className={'opacity-60'}>
-                        Available From:
-                        {' '}
-                    </span>
-                    <span>
-                         {data.availableFrom}
-                    </span>
-                </p>
+
+                    <p className={'text-[12px]'}>
+                        <span className={'opacity-60'}>
+                            Available From:
+                            {' '}
+                        </span>
+
+                        <span>
+                             {
+                                 data.availableFrom
+                                     ? dayjs(data.availableFrom).format('DD.MM.YYYY')
+                                     : 'Not listed'
+                             }
+                        </span>
+                    </p>
+
             </div>
         </article>
     );
