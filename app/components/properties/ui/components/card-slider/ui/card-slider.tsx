@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Image from "next/image";
 import {EffectCreative, Pagination} from "swiper/modules";
-import defaultSlideImage from '@/app/assets/images/profile.jpg';
+import defaultSlideImage from '@/app/assets/images/default.slide.jpg';
 import {MediaModel} from "@/app/context";
 
 interface Props {
