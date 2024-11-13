@@ -1,6 +1,5 @@
 import type { NextConfig } from "next";
-
-const path = require('path');
+import path from 'path';
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -17,9 +16,8 @@ const nextConfig: NextConfig = {
             ...config.resolve.alias,
             '@': path.resolve(__dirname, './'),
         };
-
         return config;
-    },
+    }
 };
 
 export default nextConfig;
