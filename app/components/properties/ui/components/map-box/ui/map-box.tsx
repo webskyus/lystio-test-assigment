@@ -100,7 +100,7 @@ const MapBox = () => {
             })
             map.on('zoom', debounce(() => {
                 setZoom(map.getZoom());
-            }, 500))
+            }, 250))
             map.addControl(navigationControl)
             map.on('click', () => {
                 setSelectedMarker(null);
