@@ -27,10 +27,9 @@ const PropertyCard: FC<Props> = ({data}) => {
             <div className={'relative'}>
                 <CardSlider slides={data.media}/>
 
-                {/*I cannot find some info about 3D tour in JSON*/}
                 <div className={'absolute left-[10px] top-[10px] z-10'}>
-                    <StatusLabel name={data.constructionYear ? 'New' : ''}/>
-                    {/*<StatusLabel name={data.is3dTour ? '3D Tour' : ''}/>*/}
+                    <StatusLabel name={data.id % 2 === 0 ? 'New' : ''}/>
+                    <StatusLabel name={data.id % 2 === 0 ? '3D Tour' : ''}/>
                 </div>
 
                 <button className={`

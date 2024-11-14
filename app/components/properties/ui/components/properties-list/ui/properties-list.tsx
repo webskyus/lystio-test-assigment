@@ -13,6 +13,24 @@ interface Props {
 }
 
 const PropertiesList: FC<Props> = ({properties}) => {
+    const [sortingElements] = useState([
+        {
+            id: 0,
+            icon: <Icon icon="bi:grid-3x3-gap" width={20} height={20}/>,
+            name: 'Grid 3x3',
+        },
+        {
+            id: 1,
+            icon: <Icon icon="ic:baseline-list" width={20} height={20}/>,
+            name: 'Baseline',
+        },
+        {
+            id: 2,
+            icon: <Icon icon="flowbite:grid-outline" width={20} height={20}/>,
+            name: 'Grid 2x2',
+        }
+    ]);
+    const [activeSortElement, setActiveSortElement] = useState(0);
     const [propertyList, setPropertyList] = useState<PropertyModel[]>(properties);
     const {state} = useSearch();
 
@@ -21,6 +39,8 @@ const PropertiesList: FC<Props> = ({properties}) => {
             setPropertyList(state.properties);
         }
     }, [state.properties])
+
+    const handleSetActiveSortElement = (id: number) => setActiveSortElement(id);
 
     return (
         <section className={`
@@ -49,55 +69,48 @@ const PropertiesList: FC<Props> = ({properties}) => {
                 </h2>
 
                 <nav className={'flex items-center'}>
-                    <ul className={'flex items-center mr-[22px] p-[4px] bg-background'}>
-                        <li className={'mr-[8px]'}>
-                            <button className={`
-                                flex items-center justify-center 
+                    <ul className={'relative flex items-center mr-[22px] p-[4px] bg-background transition'}>
+                        <span className={`
+                                absolute top-[4px] left-[4px] 
                                 min-w-[40px] min-h-[30px] 
-                                rounder-[4px] 
-                                shadow-lg 
-                                bg-white
-                                transition 
-                                hover:opacity-80
-                            `}>
-                                <Icon icon="bi:grid-3x3-gap" width={20} height={20}/>
-                            </button>
-                        </li>
-                        <li className={'mr-[8px]'}>
-                            <button className={`
-                                flex items-center justify-center 
-                                min-w-[40px] min-h-[30px] 
-                                rounder-[4px] 
-                                transition 
-                                hover:bg-white
-                            `}>
-                                <Icon icon="ic:baseline-list" width={20} height={20}/>
-                            </button>
-                        </li>
-                        <li>
-                            <button className={`
-                                flex items-center justify-center 
-                                min-w-[40px] min-h-[30px] 
-                                rounder-[4px] 
-                                transition 
-                                hover:bg-white
-                            `}>
-                                <Icon icon="flowbite:grid-outline" width={20} height={20}/>
-                            </button>
-                        </li>
+                                rounder-[4px] shadow-lg bg-white
+                                transition
+                             `}
+                              style={{
+                                  transform: `translateX(${activeSortElement * 48}px)`
+                              }}
+                        />
+                        {
+                            sortingElements.map((element) => {
+                                return <li key={element.id}
+                                           className={'mr-[8px] transition'}
+                                           onClick={() => handleSetActiveSortElement(element.id)}>
+                                    <button className={`
+                                            relative
+                                            flex items-center justify-center 
+                                            min-w-[40px] min-h-[30px] 
+                                            rounder-[4px] 
+                                            transition 
+                                            ${activeSortElement === element.id ? 'hover:opacity-80' : 'hover:bg-white'} 
+                                    `}>
+                                        {element.icon}
+                                    </button>
+                                </li>
+                            })
+                        }
                     </ul>
 
                     <ul>
-                       <button className={`
+                        <button className={`
                             flex items-center 
                             px-[10px] py-[7px]
                             text-[12px]  
                             rounded-[4px] 
                             hover:bg-background transition
                        `}>
-                           Sort by Relevance
-                           <Icon icon="basil:sort-solid" width={24} height={24} className={'ml-[8px]'} />
-                       </button>
+                            Sort by Relevance
+                            <Icon icon="basil:sort-solid" width={24} height={24} className={'ml-[8px]'}/>
+                        </button>
                     </ul>
                 </nav>
             </header>
