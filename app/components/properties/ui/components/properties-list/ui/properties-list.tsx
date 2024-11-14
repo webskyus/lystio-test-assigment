@@ -45,7 +45,7 @@ const PropertiesList: FC<Props> = ({properties}) => {
     return (
         <section className={`
                 relative 
-                container mx-auto max-h-[calc(100vh-152px)] 
+                container mx-auto
                 p-[24px]
                 pt-0
                 scrollbar-hide 

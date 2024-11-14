@@ -4,7 +4,7 @@ import React, {useEffect, useRef} from 'react';
 import mapboxgl from "mapbox-gl"
 import {Icon} from "@iconify/react";
 
-mapboxgl.accessToken = `pk.eyJ1IjoibHlzdGlvIiwiYSI6ImNtMjA3cmFoejBnMngycXM4anNuNXFmaTQifQ.y-WiEerYZrFOm8Xd8a7GwQ`;
+mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN  as string;
 
 const MapBox = () => {
     const mapContainer = useRef(null);
@@ -17,6 +17,7 @@ const MapBox = () => {
             zoom: 14,
             pitch: 60,
         })
+
         map.on("load", () => {
             map.addSource("mapbox-dem", {
                 type: "raster-dem",
@@ -41,7 +42,7 @@ const MapBox = () => {
         <section className={`
             relative
             flex justify-center items-center 
-            w-full h-[700px] min-h-[calc(100vh-152px)] 
+            w-full
             overflow-hidden
         `}>
             <nav>
@@ -197,6 +198,4 @@ const MapBox = () => {
     );
 };
 
-export {
-    MapBox
-};
+export default MapBox
