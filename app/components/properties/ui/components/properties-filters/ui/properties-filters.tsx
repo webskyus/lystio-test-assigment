@@ -5,6 +5,7 @@ import {Icon} from "@iconify/react";
 import Slider from "rc-slider";
 import './slider.css';
 import {useSearch} from "@/app/context";
+import {DEFAULT_FILTERS} from "@/app/utils/api-config";
 
 
 enum FILTER_ID {
@@ -52,7 +53,7 @@ const filters = [
 ]
 
 const PropertiesFilters = () => {
-    const [priceRange, setPriceRange] = useState<number[]>([300, 500]);
+    const [priceRange, setPriceRange] = useState<number[]>(DEFAULT_FILTERS.filter.rent);
     const [showPriceRange, setShowPriceRange] = useState(false);
     const {updateFilters} = useSearch();
 

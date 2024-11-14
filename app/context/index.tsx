@@ -1,7 +1,7 @@
 'use client';
 
 import React, {createContext, useContext, useReducer, ReactNode, useMemo} from 'react';
-import {API_TENEMENT_SEARCH, DEFAULT_FILTERS} from "@/app/utils/consts";
+import {API_TENEMENT_SEARCH, DEFAULT_FILTERS, OPTIONS} from "@/app/utils/api-config";
 
 export interface MediaModel {
     id: number;
@@ -136,10 +136,7 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
 
         try {
             const res = await fetch(API_TENEMENT_SEARCH, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                ...OPTIONS,
                 body: JSON.stringify(state.filters),
             });
             const list = await res.json();

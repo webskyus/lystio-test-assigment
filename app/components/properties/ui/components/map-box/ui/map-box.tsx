@@ -1,22 +1,78 @@
 'use client';
 
-import React, {useEffect, useRef} from 'react';
-import mapboxgl from "mapbox-gl"
+import React, {useEffect, useRef, useState} from 'react';
+import mapboxgl, {NavigationControl} from "mapbox-gl"
 import {Icon} from "@iconify/react";
+import useFetchPropertiesOnMap, {PropertyOnMapModel} from "@/app/hooks/useFetchMapProperties";
+import debounce from 'lodash.debounce';
+import {PropertyMapCard} from "@/app/components/properties/ui/components/property-map-card";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN  as string;
 
 const MapBox = () => {
+    const [zoom, setZoom] = useState(11);
+    const [selectedMarker, setSelectedMarker] = useState<PropertyOnMapModel | null>(null);
+    const [mapInstance, setMapInstance] = useState<mapboxgl.Map | null>(null);
     const mapContainer = useRef(null);
+    const {propertiesOnMapList} = useFetchPropertiesOnMap(zoom);
 
     useEffect(() => {
+        if (!mapInstance) return;
+
+        propertiesOnMapList.map((propertyOnMap: PropertyOnMapModel) => {
+            const markerElement = document.createElement('div');
+            markerElement.innerHTML = `
+               <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                   <div style="display: flex; justify-content: center; align-items: center; ;min-width: 45px; min-height: 45px; background-color: white; border-radius: 50%;">
+                        <strong>
+                            ${propertyOnMap.count > 1 ? propertyOnMap.count : propertyOnMap.rentRange[0] + ' €'}
+                        </strong>
+                    </div>
+                    <div style="width: 2px; height: 10px; background: white; border-radius: 10px;"></div>
+                </div>
+            `;
+            const marker = new mapboxgl.Marker({ element: markerElement })
+                .setLngLat(propertyOnMap.pt)
+                .addTo(mapInstance);
+
+            marker.getElement().addEventListener('click', async () => {
+                const [longitude, latitude] = propertyOnMap.pt;
+                const reverseGeocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${mapboxgl.accessToken}`;
+
+                try {
+                    const response = await fetch(reverseGeocodeUrl);
+                    const data = await response.json();
+                    const placeName = data.features?.[0]?.place_name;
+
+                    setSelectedMarker({
+                        ...propertyOnMap,
+                        address: placeName,
+                    });
+
+                } catch (error) {
+                    console.error("Error fetching geocoding data:", error);
+                    setSelectedMarker(propertyOnMap);
+                }
+
+            });
+        });
+    }, [propertiesOnMapList, mapInstance]);
+
+    useEffect(() => {
+        if (!mapContainer.current) return;
+
         const map = new mapboxgl.Map({
-            container: "map",
+            container: mapContainer.current,
             style: "mapbox://styles/mapbox/satellite-streets-v11",
-            center: [16, 48],
-            zoom: 14,
+            center: [16.37, 48.1956],
             pitch: 60,
-        })
+            zoom,
+        });
+        const navigationControl = new mapboxgl.NavigationControl();
+        navigationControl._container.style.position = 'absolute';
+        navigationControl._container.style.top = '95px';
+        navigationControl._container.style.right = '22px';
+        setMapInstance(map);
 
         map.on("load", () => {
             map.addSource("mapbox-dem", {
@@ -35,8 +91,19 @@ const MapBox = () => {
                     "sky-atmosphere-sun-intensity": 15,
                 },
             })
+            map.on('zoom', debounce(() => {
+               setZoom(map.getZoom());
+            }, 1000))
+            map.addControl(navigationControl)
+            map.on('click', () => {
+                setSelectedMarker(null);
+            });
         })
+
+
+        return () => map.remove();
     }, [])
+
 
     return (
         <section className={`
@@ -194,6 +261,20 @@ const MapBox = () => {
                 ref={mapContainer}
                 style={{width: "100%", height: "100vh"}}
             />
+
+            {selectedMarker && (
+                <div
+                    style={{
+                        position: 'absolute',
+                        bottom: '200px',
+                        right: '34px',
+                        padding: '10px',
+                        width: '317px',
+                    }}
+                >
+                    <PropertyMapCard data={selectedMarker}/>
+                </div>
+            )}
         </section>
     );
 };

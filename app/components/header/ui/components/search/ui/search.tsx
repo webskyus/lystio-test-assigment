@@ -8,12 +8,6 @@ const Search = () => {
 
     const handleSubmitForm = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        // I couldn't find an API for searching by cities,
-        // and it wasn't part of the requirements, but if needed,
-        // I can implement it. I just need the filter responsible for that.
-        // I tried using some from the documentation but kept getting a 500 error.
-        // setSearchQuery(searchText);
     }
 
     return (
