@@ -11,12 +11,13 @@ const Search = () => {
     }
 
     return (
-        <form onSubmit={handleSubmitForm} className={`
-            flex items-stretch 2xl:min-w-[514px] 
-            pl-[8px] pr-[4px] py-[3px]
-            border border-primary
-            rounded-full 
-        `}>
+        <form onSubmit={handleSubmitForm}
+              className={`
+                flex items-stretch 2xl:min-w-[514px] 
+                pl-[8px] pr-[4px] py-[3px]
+                border border-primary
+                rounded-full 
+            `}>
             <input
                 type="text"
                 placeholder="Search"

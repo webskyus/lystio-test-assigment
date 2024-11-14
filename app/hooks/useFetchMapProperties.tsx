@@ -31,7 +31,7 @@ const useFetchPropertiesOnMap = (zoom: number) => {
 
             setPropertiesOnMapList(list);
         } catch (e) {
-            console.log('Fetch properties on map error', e);
+            console.error('Fetch properties on map error', e);
         }
     }
 

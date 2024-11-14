@@ -1,1 +1,1 @@
-export {PropertiesList} from './ui/properties-list'
+export {PropertiesList} from './ui/properties-list';

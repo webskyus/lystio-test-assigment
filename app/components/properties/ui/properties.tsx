@@ -29,6 +29,4 @@ const Properties: FC<Props> = ({properties}) => {
     );
 };
 
-export {
-    Properties
-};
+export {Properties};

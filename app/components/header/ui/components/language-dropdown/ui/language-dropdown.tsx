@@ -15,6 +15,4 @@ const LanguageDropdown = () => {
     );
 };
 
-export {
-    LanguageDropdown
-};
+export {LanguageDropdown};

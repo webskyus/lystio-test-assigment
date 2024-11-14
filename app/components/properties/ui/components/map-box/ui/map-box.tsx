@@ -1,7 +1,7 @@
 'use client';
 
 import React, {useEffect, useRef, useState} from 'react';
-import mapboxgl, {Marker, NavigationControl} from "mapbox-gl"
+import mapboxgl, {Marker} from "mapbox-gl"
 import {Icon} from "@iconify/react";
 import useFetchPropertiesOnMap, {PropertyOnMapModel} from "@/app/hooks/useFetchMapProperties";
 import debounce from 'lodash.debounce';

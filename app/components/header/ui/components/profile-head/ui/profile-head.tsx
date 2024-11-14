@@ -11,6 +11,4 @@ const ProfileHead = () => {
     );
 };
 
-export {
-    ProfileHead
-};
+export {ProfileHead};
