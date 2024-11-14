@@ -1,7 +1,7 @@
 'use client';
 
 import React, {useEffect, useRef, useState} from 'react';
-import mapboxgl, {NavigationControl} from "mapbox-gl"
+import mapboxgl, {Marker, NavigationControl} from "mapbox-gl"
 import {Icon} from "@iconify/react";
 import useFetchPropertiesOnMap, {PropertyOnMapModel} from "@/app/hooks/useFetchMapProperties";
 import debounce from 'lodash.debounce';
@@ -17,7 +17,8 @@ const MapBox = () => {
     const {propertiesOnMapList} = useFetchPropertiesOnMap(zoom);
 
     useEffect(() => {
-        if (!mapInstance) return;
+        if (!mapInstance || !propertiesOnMapList) return;
+        const markers: Marker[] = [];
 
         propertiesOnMapList.map((propertyOnMap: PropertyOnMapModel) => {
             const markerElement = document.createElement('div');
@@ -34,6 +35,8 @@ const MapBox = () => {
             const marker = new mapboxgl.Marker({ element: markerElement })
                 .setLngLat(propertyOnMap.pt)
                 .addTo(mapInstance);
+
+            markers.push(marker);
 
             marker.getElement().addEventListener('click', async () => {
                 const [longitude, latitude] = propertyOnMap.pt;
@@ -56,6 +59,10 @@ const MapBox = () => {
 
             });
         });
+
+        return () => {
+            markers.map(marker => marker.remove());
+        };
     }, [propertiesOnMapList, mapInstance]);
 
     useEffect(() => {
@@ -92,8 +99,8 @@ const MapBox = () => {
                 },
             })
             map.on('zoom', debounce(() => {
-               setZoom(map.getZoom());
-            }, 1000))
+                setZoom(map.getZoom());
+            }, 500))
             map.addControl(navigationControl)
             map.on('click', () => {
                 setSelectedMarker(null);
